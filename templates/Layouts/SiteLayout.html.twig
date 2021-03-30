@@ -1,0 +1,16 @@
+{% extends 'Layouts/genneralLayout.html.twig' %}
+
+{% block body %}
+    <div>
+        {% block entete %}{% endblock %}
+    </div>
+    <h1>{% block titre_principal %}{% endblock %}</h1>
+    <div>
+        {% block menu %}{% endblock %}
+    </div>
+    <div>
+        {% block footer %}
+            <img src="../../public/images/footer.PNG">
+        {% endblock %}
+    </div>
+{% endblock %}
