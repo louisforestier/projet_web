@@ -15,28 +15,9 @@ class AccueilController extends AbstractController
     public function index(): Response
     {
         $user = $this->getParameter('user');
-        $em = $this->getDoctrine()->getManager();
-        $utilisateurRepository = $em->getRepository('App:Utilisateur');
-        $utilisateur = $utilisateurRepository->find($user);
-        if (is_null($utilisateur))
-        {
-            return $this->render('Accueil/accueilInconnuVue.html.twig', [
-                'user' => $user
-            ]);
-
-        }
-        elseif ($utilisateur->getIsadmin())
-        {
-            return $this->render('Accueil/accueilAdminVue.html.twig', [
-                'user' => $user
-            ]);
-        }
-        else
-        {
-            return $this->render('Accueil/accueilClientVue.html.twig', [
-                'user' => $user
-            ]);
-        }
+        return $this->render('accueil/accueilAdminVue.html.twig', [
+            'user' => $user
+        ]);
     }
 
     /**
@@ -79,5 +60,13 @@ class AccueilController extends AbstractController
         return $this->render('Accueil/gestionUtilisateurs.html.twig');
     }
 
+
+    /**
+     * @Route ( "/testvue/1", name="accueil_testvue_1")
+     */
+    public function testvue1Action(): Response
+    {
+        return $this->render('accueil/accueilClienyVue.html.twig');
+    }
 
 }
