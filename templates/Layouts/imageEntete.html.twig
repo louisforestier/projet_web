@@ -1,0 +1,7 @@
+{% if utilisateur is null %}
+    <img src="{{ asset("images/enteteInconnu.PNG") }}">
+{% elseif utilisateur.isadmin %}
+    <img src="{{ asset("images/enteteAdmin.PNG") }}">
+{% else %}
+    <img src="{{ asset("images/enteteClient.PNG") }}">
+{% endif %}

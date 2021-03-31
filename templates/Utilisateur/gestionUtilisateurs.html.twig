@@ -1,0 +1,35 @@
+{% extends '/Layouts/siteLayout.html.twig' %}
+
+
+{% block titre_principal %} Liste des utilisateurs {% endblock %}
+
+{% block vue %}
+    <table border="1" style="border: solid; border-collapse: collapse">
+        <thead>
+        <tr>
+            <td>Identifiant</td>
+            <td>Mot de passe</td>
+            <td>Nom</td>
+            <td>Prénom</td>
+            <td>Date de naissance</td>
+            <td>Statut</td>
+        </tr>
+        </thead>
+        <tbody>
+        {% for utilisateur in utilisateurs %}
+        <tr>
+            <td>{{ utilisateur.identifiant }}</td>
+            <td>{{ utilisateur.motdepasse }}</td>
+            <td>{{ utilisateur.nom }}</td>
+            <td>{{ utilisateur.prenom }}</td>
+            {# obligé de vérifier si la date n'est pas nulle sinon il met la date du jour #}
+            <td>{% if utilisateur.anniversaire is not null %}{{ utilisateur.anniversaire|date('d/m/Y') }} {% endif %}</td>
+            <td>{% if utilisateur.isadmin %} Administrateur {% else %} Client {% endif%} </td>
+            {% if utilisateur.id != user %}
+            <td><a href="{{ path('utilisateur_supprimer',{'id': utilisateur.id}) }}">Supprimer</a></td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -1,14 +1,23 @@
 {% extends '/Layouts/generalLayout.html.twig' %}
 
-{% block style %} <link rel="stylesheet" href="{{ path("/styles/styleSite.css") }}"> {% endblock %}
+{% block style %}
+    <link href="{{ asset("styles/styleSite.css") }} " rel="stylesheet">
+    {% block stylevue %}
+    {% endblock %}
+{% endblock %}
 
 {% block body %}
     <div>
+        {{ render(controller('App\\Controller\\AccueilController::imageEntete')) }}
         {% block entete %}{% endblock %}
     </div>
-    <h1>{% block titre_principal %}{% endblock %}</h1>
     <div>
+        {{ render(controller('App\\Controller\\AccueilController::menu')) }}
         {% block menu %}{% endblock %}
+    </div>
+    <div>
+        <h1>{% block titre_principal %}{% endblock %}</h1>
+        {% block vue %}{% endblock %}
     </div>
     <div>
         {% block footer %}

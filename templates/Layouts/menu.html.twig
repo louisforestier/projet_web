@@ -1,0 +1,17 @@
+<table>
+    <tr>
+        {% if utilisateur is null %}
+            <td><a>Connexion</a></td>
+            <td><a>Créer un compte</a></td>
+        {% elseif utilisateur.isadmin %}
+                <td><a>Déconnexion</a></td>
+                <td><a href="{{ path("utilisateur_gestion") }}">Gestion utilisateur</a></td>
+                <td><a>Ajout produit</a></td>
+        {% else %}
+                <td><a>Déconnexion</a></td>
+                <td><a>Modifier profil</a></td>
+                <td><a>Produits</a></td>
+                <td><a>Panier</a></td>
+        {% endif %}
+    </tr>
+</table>

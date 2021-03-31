@@ -15,10 +15,32 @@ class AccueilController extends AbstractController
     public function index(): Response
     {
         $user = $this->getParameter('user');
-        return $this->render('accueil/accueilAdminVue.html.twig', [
-            'user' => $user
+        $em = $this->getDoctrine()->getManager();
+        $utilisateurRepository = $em->getRepository('App:Utilisateur');
+        $utilisateur = $utilisateurRepository->find($user);
+        return $this->render('Accueil/accueil.html.twig', [
+            'utilisateur' => $utilisateur
         ]);
     }
+
+    public function imageEntete():Response
+    {
+        $user = $this->getParameter('user');
+        $em = $this->getDoctrine()->getManager();
+        $utilisateurRepository = $em->getRepository('App:Utilisateur');
+        $utilisateur = $utilisateurRepository->find($user);
+        return $this->render("Layouts/imageEntete.html.twig", ['utilisateur'=>$utilisateur]);
+    }
+
+    public function menu():Response
+    {
+        $user = $this->getParameter('user');
+        $em = $this->getDoctrine()->getManager();
+        $utilisateurRepository = $em->getRepository('App:Utilisateur');
+        $utilisateur = $utilisateurRepository->find($user);
+        return $this->render("Layouts/menu.html.twig", ['utilisateur'=>$utilisateur]);
+    }
+
 
     /**
      * @return Response
@@ -51,14 +73,6 @@ class AccueilController extends AbstractController
         return new Response('<body></body>');
     }
 
-    public function gestionUtilisateursAction():Response
-    {
-        $em = $this->getDoctrine()->getManager();
-        $utilisateurRepository = $em->getRepository('App:Utilisateur');
-        $utilisateurs= $utilisateurRepository->findAll();
-        $args = array("utilisateurs"=>$utilisateurs);
-        return $this->render('Accueil/gestionUtilisateurs.html.twig');
-    }
 
 
     /**

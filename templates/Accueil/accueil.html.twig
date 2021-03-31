@@ -1,0 +1,17 @@
+{% extends '/Layouts/siteLayout.html.twig' %}
+
+{% block stylevue %}
+    <link href="{{ asset("styles/styleAccueil.css") }} " rel="stylesheet">
+{% endblock %}
+
+{% block titre_principal %} Bienvenue ! {% endblock %}
+
+{% block vue %}
+    {% if utilisateur is null %}
+        <p> Vous n'êtes pas connecté. </p>
+    {% elseif utilisateur.isadmin %}
+        <p> Vous êtes un administrateur. </p>
+    {% else %}
+        <p> Vous êtes un client. </p>
+    {% endif %}
+{% endblock %}
