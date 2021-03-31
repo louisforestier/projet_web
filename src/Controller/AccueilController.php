@@ -7,6 +7,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Class AccueilController
+ * @package App\Controller
+ * @Route ("/accueil")
+ */
+
 class AccueilController extends AbstractController
 {
     /**
@@ -49,6 +55,14 @@ class AccueilController extends AbstractController
 
         $em->flush();
         return new Response('<body></body>');
+    }
+
+    /**
+     * @Route ( "/testvue/1", name="accueil_testvue_1")
+     */
+    public function testvue1Action(): Response
+    {
+        return $this->render('accueil/accueilClienyVue.html.twig');
     }
 
 }
