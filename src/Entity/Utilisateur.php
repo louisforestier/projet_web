@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="im2021_utilisateurs", options={"comment"="Table des utilisateurs du site"})
  * @ORM\Entity(repositoryClass=UtilisateursRepository::class)
  */
-class Utilisateurs
+class Utilisateur
 {
     /**
      * @ORM\Id

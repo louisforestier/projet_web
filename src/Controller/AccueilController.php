@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Utilisateurs;
+use App\Entity\Utilisateur;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,9 +15,28 @@ class AccueilController extends AbstractController
     public function index(): Response
     {
         $user = $this->getParameter('user');
-        return $this->render('accueil/accueilAdminVue.html.twig', [
-            'user' => $user
-        ]);
+        $em = $this->getDoctrine()->getManager();
+        $utilisateurRepository = $em->getRepository('App:Utilisateur');
+        $utilisateur = $utilisateurRepository->find($user);
+        if (is_null($utilisateur))
+        {
+            return $this->render('Accueil/accueilInconnuVue.html.twig', [
+                'user' => $user
+            ]);
+
+        }
+        elseif ($utilisateur->getIsadmin())
+        {
+            return $this->render('Accueil/accueilAdminVue.html.twig', [
+                'user' => $user
+            ]);
+        }
+        else
+        {
+            return $this->render('Accueil/accueilClientVue.html.twig', [
+                'user' => $user
+            ]);
+        }
     }
 
     /**
@@ -27,19 +46,19 @@ class AccueilController extends AbstractController
     public function ajoutsUtilisateursAction():Response
     {
         $em = $this->getDoctrine()->getManager();
-        $admin = new Utilisateurs();
+        $admin = new Utilisateur();
         $admin->setIdentifiant('admin')
             ->setMotdepasse('nimda')
             ->setIsadmin(true);
         $em->persist($admin);
-        $gillou = new Utilisateurs();
+        $gillou = new Utilisateur();
         $gillou->setIdentifiant('gilles')
             ->setMotdepasse('sellig')
             ->setNom('Subrenat')
             ->setPrenom('Gilles')
             ->setAnniversaire(new \DateTime("01-01-2000"));
         $em->persist($gillou);
-        $rita = new Utilisateurs();
+        $rita = new Utilisateur();
         $rita->setIdentifiant('rita')
             ->setMotdepasse('atir')
             ->setNom('Zrour')
@@ -50,5 +69,15 @@ class AccueilController extends AbstractController
         $em->flush();
         return new Response('<body></body>');
     }
+
+    public function gestionUtilisateursAction():Response
+    {
+        $em = $this->getDoctrine()->getManager();
+        $utilisateurRepository = $em->getRepository('App:Utilisateur');
+        $utilisateurs= $utilisateurRepository->findAll();
+        $args = array("utilisateurs"=>$utilisateurs);
+        return $this->render('Accueil/gestionUtilisateurs.html.twig');
+    }
+
 
 }
