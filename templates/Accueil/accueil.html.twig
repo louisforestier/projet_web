@@ -8,10 +8,16 @@
 
 {% block vue %}
     {% if utilisateur is null %}
-        <p> Vous n'êtes pas connecté. </p>
-    {% elseif utilisateur.isadmin %}
+    <p> Vous n'êtes pas connecté. </p>
+    {% else %}
+    {% if utilisateur.isadmin %}
         <p> Vous êtes un administrateur. </p>
     {% else %}
         <p> Vous êtes un client. </p>
+    {% endif %}
+
+    {% for msg in app.session.flashBag.get('info') %}
+        <p> {{ msg }}</p>
+    {% endfor %}
     {% endif %}
 {% endblock %}

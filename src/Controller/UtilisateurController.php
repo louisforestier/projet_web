@@ -17,6 +17,47 @@ class UtilisateurController extends AbstractController
 
     /**
      * @return Response
+     * @Route(
+     *     "/connexion",
+     *     name="utilisateur_connexion"
+     * )
+     */
+    public function connexionAction():Response
+    {
+        $user = $this->getParameter('user');
+        $em = $this->getDoctrine()->getManager();
+        $utilisateurRepository = $em->getRepository('App:Utilisateur');
+        $utilisateur_connecte = $utilisateurRepository->find($user);
+        if (!is_null($utilisateur_connecte))
+            throw new NotFoundHttpException("Vous êtes déjà connecté.");
+        else {
+            return $this->render("Utilisateur/connexion.html.twig");
+        }
+    }
+
+    /**
+     * @return Response
+     * @Route (
+     *     "/deconnexion",
+     *     name="utilisateur_deconnexion"
+     * )
+     */
+    public function deconnexionAction():Response
+    {
+        $user = $this->getParameter('user');
+        $em = $this->getDoctrine()->getManager();
+        $utilisateurRepository = $em->getRepository('App:Utilisateur');
+        $utilisateur_connecte = $utilisateurRepository->find($user);
+        if (is_null($utilisateur_connecte))
+            throw new NotFoundHttpException("Vous êtes déjà connecté.");
+        else {
+            $this->addFlash("info","Vous auriez dû être déconnecté.");
+            return $this->redirectToRoute("accueil");
+        }
+    }
+
+    /**
+     * @return Response
      * @Route (
      *     "/gestion",
      *     name = "utilisateur_gestion"
@@ -61,7 +102,6 @@ class UtilisateurController extends AbstractController
             return $this->redirectToRoute("utilisateur_gestion");
 
         }
-        //juste pour que la vue de gestion fonctionne
     }
 
 }

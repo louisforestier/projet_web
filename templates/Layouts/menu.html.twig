@@ -1,17 +1,19 @@
 <table>
     <tr>
+        <td><a href="{{ path("accueil") }}">Accueil</a></td>
         {% if utilisateur is null %}
-            <td><a>Connexion</a></td>
+            <td><a href="{{ path("utilisateur_connexion") }}">Connexion</a></td>
             <td><a>Créer un compte</a></td>
         {% elseif utilisateur.isadmin %}
-                <td><a>Déconnexion</a></td>
-                <td><a href="{{ path("utilisateur_gestion") }}">Gestion utilisateur</a></td>
-                <td><a>Ajout produit</a></td>
+            <td><a href="{{ path("utilisateur_deconnexion") }}">Déconnexion</a></td>
+            <td><a href="{{ path("utilisateur_gestion") }}">Gestion utilisateur</a></td>
+            <td><a>Ajout produit</a></td>
+            <td><a href="https://fr.wikipedia.org/wiki/Amour_et_Amn%C3%A9sie">Amour et Amnésie</a></td>
         {% else %}
-                <td><a>Déconnexion</a></td>
-                <td><a>Modifier profil</a></td>
-                <td><a>Produits</a></td>
-                <td><a>Panier</a></td>
+            <td><a href="{{ path("utilisateur_deconnexion") }}">Déconnexion</a></td>
+            <td><a>Modifier profil</a></td>
+            <td><a>Produits</a></td>
+            <td><a>Panier</a></td>
         {% endif %}
     </tr>
 </table>
