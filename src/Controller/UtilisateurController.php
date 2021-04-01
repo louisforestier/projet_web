@@ -2,7 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Utilisateur;
+use App\Form\UtilisateurType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
@@ -33,6 +37,41 @@ class UtilisateurController extends AbstractController
         else {
             return $this->render("Utilisateur/connexion.html.twig");
         }
+    }
+
+    /**
+     * @param Request $request
+     * @return Response
+     * @Route (
+     *     "/creer",
+     *     name="utilisateur_creer"
+     * )
+     */
+    public function creerClientAction(Request $request):Response
+    {
+        $user = $this->getParameter('user');
+        $em = $this->getDoctrine()->getManager();
+        $utilisateurRepository = $em->getRepository('App:Utilisateur');
+        $utilisateur_connecte = $utilisateurRepository->find($user);
+        if (!is_null($utilisateur_connecte))
+            throw new NotFoundHttpException("Vous êtes déjà connecté.");
+        else {
+            $utilisateur = new Utilisateur();
+            $form = $this->createForm(UtilisateurType::class,$utilisateur);
+            $form->add('send', SubmitType::class,['label'=>'Créer compte']);
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid())
+            {
+                $em->persist($utilisateur);
+                $em->flush();
+                $this->addFlash('info','Votre compte a été créé avec succès.');
+                return $this->redirectToRoute('accueil');
+            }
+
+            $args = array('formCreerClient'=>$form->createView());
+            return $this->render("Utilisateur/creerClient.html.twig",$args);
+        }
+
     }
 
     /**

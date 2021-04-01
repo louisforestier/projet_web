@@ -3,7 +3,7 @@
         <td><a href="{{ path("accueil") }}">Accueil</a></td>
         {% if utilisateur is null %}
             <td><a href="{{ path("utilisateur_connexion") }}">Connexion</a></td>
-            <td><a>Créer un compte</a></td>
+            <td><a href="{{ path("utilisateur_creer") }}">Créer un compte</a></td>
         {% elseif utilisateur.isadmin %}
             <td><a href="{{ path("utilisateur_deconnexion") }}">Déconnexion</a></td>
             <td><a href="{{ path("utilisateur_gestion") }}">Gestion utilisateur</a></td>
