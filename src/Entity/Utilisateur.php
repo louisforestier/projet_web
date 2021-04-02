@@ -4,10 +4,13 @@ namespace App\Entity;
 
 use App\Repository\UtilisateursRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="im2021_utilisateurs", options={"comment"="Table des utilisateurs du site"})
  * @ORM\Entity(repositoryClass=UtilisateursRepository::class)
+ * @UniqueEntity("identifiant", message="Cet identifiant existe déjà.")
  */
 class Utilisateur
 {
@@ -24,6 +27,7 @@ class Utilisateur
      *     length=30,
      *     unique=true,
      *     options={"comment"="sert de login (doit être unique)"})
+     * @Assert\NotBlank(message="L'identifiant est obligatoire.")
      */
     private $identifiant;
 
@@ -33,6 +37,9 @@ class Utilisateur
      *     length=64,
      *     options={"comment"="mot de passe crypté : il faut une taille assez grande pour ne pas le tronquer"}
      * )
+     * @Assert\NotBlank (message="Le mot de passe est obligatoire.")
+     * @Assert\Length(min="6") //ne sert à rien car la vérification est faite après hachage sha1.
+     *
      */
     private $motdepasse;
 

@@ -15,9 +15,8 @@
     {% else %}
         <p> Vous êtes un client. </p>
     {% endif %}
-
+    {% endif %}
     {% for msg in app.session.flashBag.get('info') %}
         <p> {{ msg }}</p>
     {% endfor %}
-    {% endif %}
 {% endblock %}

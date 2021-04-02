@@ -3,5 +3,45 @@
 {% block titre_principal %} Création du compte {% endblock %}
 
 {% block vue %}
-{{ form(formCreerClient) }}
+    {{ form_start(formCreerClient) }}
+    {{ form_errors(formCreerClient) }}
+    <table>
+        <tr>
+            <td>{{ form_label(formCreerClient.identifiant) }}</td>
+            <td>{{ form_widget(formCreerClient.identifiant) }}</td>
+            <td>{{ form_errors(formCreerClient.identifiant) }}</td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top">{{ form_label(formCreerClient.motdepasse.first) }}</td>
+            <td>
+                {{ form_widget(formCreerClient.motdepasse.first) }}<br>
+                {{ form_help(formCreerClient.motdepasse.first) }}
+            </td>
+            <td>{{ form_errors(formCreerClient.motdepasse.first) }}</td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top">{{ form_label(formCreerClient.motdepasse.second) }}</td>
+            <td>
+                {{ form_widget(formCreerClient.motdepasse.second) }}
+                {{ form_help(formCreerClient.motdepasse.second) }}
+            </td>
+            <td>{{ form_errors(formCreerClient.motdepasse.second) }}</td>
+        </tr>
+        <tr>
+            <td>{{ form_label(formCreerClient.nom) }}</td>
+            <td>{{ form_widget(formCreerClient.nom) }}</td>
+            <td>{{ form_errors(formCreerClient.nom) }}</td>
+        </tr>
+        <tr>
+            <td>{{ form_label(formCreerClient.prenom) }}</td>
+            <td>{{ form_widget(formCreerClient.prenom) }}</td>
+            <td>{{ form_errors(formCreerClient.prenom) }}</td>
+        </tr>
+        <tr>
+            <td>{{ form_label(formCreerClient.anniversaire) }}</td>
+            <td>{{ form_widget(formCreerClient.anniversaire) }}</td>
+            <td>{{ form_errors(formCreerClient.anniversaire) }}</td>
+        </tr>
+    </table>
+    {{ form_end(formCreerClient) }}
 {% endblock %}
