@@ -96,6 +96,36 @@ class UtilisateurController extends AbstractController
     }
 
     /**
+     * @param Request $request
+     * @return Response
+     * @Route (
+     *     "/modifier_profil",
+     *     name="utilisateur_modifier_profil",
+     * )
+     */
+    public function modifierProfilAction(Request $request):Response
+    {
+        $user = $this->getParameter('user');
+        $em = $this->getDoctrine()->getManager();
+        $utilisateurRepository = $em->getRepository('App:Utilisateur');
+        $utilisateur = $utilisateurRepository->find($user);
+        if (is_null($utilisateur) || ($utilisateur->getIsadmin()))
+            throw new NotFoundHttpException("Vous n'avez pas les droits pour accéder à cette page.");
+        else {
+            $form = $this->createForm(UtilisateurType::class,$utilisateur);
+            $form->add('send',SubmitType::class,['label'=>'Modifier profil']);
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()){
+                $em->flush();
+                $this->addFlash('info','Votre profil a été modifié avec succès.');
+                $this->redirectToRoute('accueil');
+            }
+            $args = array('formModifierProfil'=>$form->createView());
+            return $this->render('Utilisateur/modifierProfil.html.twig',$args);
+        }
+    }
+
+    /**
      * @return Response
      * @Route (
      *     "/gestion",
@@ -118,10 +148,12 @@ class UtilisateurController extends AbstractController
     }
 
     /**
+     * @param $id
      * @return Response
      * @Route (
      *     "/supprimer/{id}",
-     *     name = "utilisateur_supprimer"
+     *     name = "utilisateur_supprimer",
+     *     requirements={"id"="[1-9]\d*"}
      * )
      */
     public function supprimerUtilisateurAction($id):Response
@@ -134,7 +166,7 @@ class UtilisateurController extends AbstractController
         if (is_null($utilisateur_connecte) || (!$utilisateur_connecte->getIsadmin()))
             throw new NotFoundHttpException("Vous n'avez pas les droits pour accéder à cette page.");
         elseif (is_null($utilisateur))
-            throw new NotFoundHttpException("Cet identifiant d'utilisateurs n'existe pas.");
+            throw new NotFoundHttpException("Cet utilisateur n'existe pas.");
         else {
             $em->remove($utilisateur);
             $em->flush();

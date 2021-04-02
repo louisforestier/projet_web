@@ -1,0 +1,46 @@
+{% extends '/Layouts/siteLayout.html.twig' %}
+{% block titre_principal %} Modification du profil {% endblock %}
+
+{% block vue %}
+    {{ form_start(formModifierProfil) }}
+    {{ form_errors(formModifierProfil) }}
+    <table>
+        <tr>
+            <td>{{ form_label(formModifierProfil.identifiant) }}</td>
+            <td>{{ form_widget(formModifierProfil.identifiant) }}</td>
+            <td>{{ form_errors(formModifierProfil.identifiant) }}</td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top">{{ form_label(formModifierProfil.motdepasse.first) }}</td>
+            <td>
+                {{ form_widget(formModifierProfil.motdepasse.first) }}<br>
+                {{ form_help(formModifierProfil.motdepasse.first) }}
+            </td>
+            <td>{{ form_errors(formModifierProfil.motdepasse.first) }}</td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top">{{ form_label(formModifierProfil.motdepasse.second) }}</td>
+            <td>
+                {{ form_widget(formModifierProfil.motdepasse.second) }}
+                {{ form_help(formModifierProfil.motdepasse.second) }}
+            </td>
+            <td>{{ form_errors(formModifierProfil.motdepasse.second) }}</td>
+        </tr>
+        <tr>
+            <td>{{ form_label(formModifierProfil.nom) }}</td>
+            <td>{{ form_widget(formModifierProfil.nom) }}</td>
+            <td>{{ form_errors(formModifierProfil.nom) }}</td>
+        </tr>
+        <tr>
+            <td>{{ form_label(formModifierProfil.prenom) }}</td>
+            <td>{{ form_widget(formModifierProfil.prenom) }}</td>
+            <td>{{ form_errors(formModifierProfil.prenom) }}</td>
+        </tr>
+        <tr>
+            <td>{{ form_label(formModifierProfil.anniversaire) }}</td>
+            <td>{{ form_widget(formModifierProfil.anniversaire) }}</td>
+            <td>{{ form_errors(formModifierProfil.anniversaire) }}</td>
+        </tr>
+    </table>
+    {{ form_end(formModifierProfil) }}
+{% endblock %}
