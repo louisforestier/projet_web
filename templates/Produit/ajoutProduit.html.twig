@@ -1,0 +1,25 @@
+{% extends '/Layouts/siteLayout.html.twig' %}
+{% block titre_principal %} Magasin {% endblock %}
+
+{% block vue %}
+    {{ form_start(formAjoutProduit) }}
+    {{ form_errors(formAjoutProduit) }}
+    <table>
+        <tr>
+            <td>{{ form_label(formAjoutProduit.libelle) }}</td>
+            <td>{{ form_widget(formAjoutProduit.libelle) }}</td>
+            <td>{{ form_errors(formAjoutProduit.libelle) }}</td>
+        </tr>
+        <tr>
+            <td>{{ form_label(formAjoutProduit.prix) }}</td>
+            <td>{{ form_widget(formAjoutProduit.prix) }}</td>
+            <td>{{ form_errors(formAjoutProduit.prix) }}</td>
+        </tr>
+        <tr>
+            <td>{{ form_label(formAjoutProduit.quantite) }}</td>
+            <td>{{ form_widget(formAjoutProduit.quantite) }}</td>
+            <td>{{ form_errors(formAjoutProduit.quantite) }}</td>
+        </tr>
+    </table>
+    {{ form_end(formAjoutProduit) }}
+{% endblock %}
