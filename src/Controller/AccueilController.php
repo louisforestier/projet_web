@@ -18,9 +18,7 @@ class AccueilController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $utilisateurRepository = $em->getRepository('App:Utilisateur');
         $utilisateur = $utilisateurRepository->find($user);
-        return $this->render('Accueil/accueil.html.twig', [
-            'utilisateur' => $utilisateur
-        ]);
+        return $this->render('Accueil/accueil.html.twig', ['utilisateur' => $utilisateur]);
     }
 
     public function imageEntete():Response
@@ -75,12 +73,9 @@ class AccueilController extends AbstractController
 
 
 
-    /**
-     * @Route ( "/testvue/1", name="accueil_testvue_1")
-     */
-    public function testvue1Action(): Response
-    {
-        return $this->render('accueil/accueilClienyVue.html.twig');
-    }
+
+
+
+   
 
 }
