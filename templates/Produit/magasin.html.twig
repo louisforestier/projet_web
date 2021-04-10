@@ -1,0 +1,46 @@
+{% extends '/Layouts/siteLayout.html.twig' %}
+{% block titre_principal %} Magasin {% endblock %}
+
+{% block vue %}
+    <form id="id_form"
+          action="{{ path('produit_magasin') }}"
+          method="post">
+        <fieldset>
+            <legend>Les produits</legend>
+            {% for produit in produits %}
+            <table>
+                <tr>
+                    <th>Nom produit : </th>
+                    <td>{{ produit.libelle }}</td>
+                </tr>
+                <tr>
+                    <th>Prix produit : </th>
+                    <td>{{ produit.prix }}</td>
+                </tr>
+                <tr>
+                    <th>Quantité en stock du produit : </th>
+                    <td>{{ produit.quantite }}</td>
+                </tr>
+                <tr>
+                    {% if produit.quantite is null %}
+                    <td>vous ne pouvez pas commandez ce produit</td>
+                    {% else %}
+                    <th> Quantité voulu </th>
+                    <td>
+                        <select name="{{ produit.id}}" id="list" size="1" tabindex="180">
+                            {% for i in 0..produit.quantite %}
+                            <option value="{{ i }}">{{ i }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    {% endif %}
+                </tr>
+            </table>
+            {% endfor %}
+        </fieldset>
+        <fieldset>
+            <legend>Validez commande</legend>
+            <input type="submit" value="envoi" tabindex="220"/>
+        </fieldset>
+    </form>
+{% endblock %}
