@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Produits;
+use App\Entity\Produit;
 use App\Form\ProduitType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -26,7 +26,7 @@ class ProduitController extends AbstractController
         if (is_null($utilisateur) || (!($utilisateur->getIsadmin())))
             throw new NotFoundHttpException("Vous n'avez pas les droits pour accéder à cette page.");
         else {
-            $produit = new Produits();
+            $produit = new Produit();
             $form = $this->createForm(ProduitType::class, $produit);
             $form->add('send', SubmitType::class, ['label' => 'ajouter produit']);
             $form->handleRequest($request);
@@ -67,7 +67,7 @@ class ProduitController extends AbstractController
                 }
             }
 
-            $produitRepository = $em->getRepository('App:Produits');
+            $produitRepository = $em->getRepository('App:Produit');
             $produits = $produitRepository->findAll();
             $args = array('produits' => $produits);
             return $this->render("Produit/magasin.html.twig", $args);
