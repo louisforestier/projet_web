@@ -36,7 +36,8 @@ class AccueilController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $utilisateurRepository = $em->getRepository('App:Utilisateur');
         $utilisateur = $utilisateurRepository->find($user);
-        return $this->render("Layouts/menu.html.twig", ['utilisateur'=>$utilisateur]);
+        $nbProduits = 0;
+        return $this->render("Layouts/menu.html.twig", ['utilisateur'=>$utilisateur,'produits'=>$nbProduits]);
     }
 
 
