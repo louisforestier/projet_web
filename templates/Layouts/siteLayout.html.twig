@@ -1,9 +1,8 @@
 {% extends '/Layouts/generalLayout.html.twig' %}
 
 {% block style %}
+    {{ parent() }}
     <link href="{{ asset("styles/styleSite.css") }} " rel="stylesheet">
-    {% block stylevue %}
-    {% endblock %}
 {% endblock %}
 
 {% block body %}

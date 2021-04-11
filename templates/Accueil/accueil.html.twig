@@ -1,6 +1,7 @@
 {% extends '/Layouts/siteLayout.html.twig' %}
 
-{% block stylevue %}
+{% block style %}
+    {{ parent() }}
     <link href="{{ asset("styles/styleAccueil.css") }} " rel="stylesheet">
 {% endblock %}
 
