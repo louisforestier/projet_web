@@ -118,7 +118,7 @@ class UtilisateurController extends AbstractController
             if ($form->isSubmitted() && $form->isValid()){
                 $em->flush();
                 $this->addFlash('info','Votre profil a été modifié avec succès.');
-                $this->redirectToRoute('accueil');
+                $this->redirectToRoute('produit_magasin');
             }
             $args = array('formModifierProfil'=>$form->createView());
             return $this->render('Utilisateur/modifierProfil.html.twig',$args);
