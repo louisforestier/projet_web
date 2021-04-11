@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table (name="im2021_produits")
  * @ORM\Entity(repositoryClass=ProduitsRepository::class)
  */
-class Produits
+class Produit
 {
     /**
      * @ORM\Id
@@ -29,7 +29,7 @@ class Produits
     private $prix;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="integer")
      */
     private $quantite;
 
@@ -76,7 +76,7 @@ class Produits
 
 
     /**
-     * Produits constructor.
+     * Produit constructor.
      */
     public function __construct(){
         $this->quantite = null;

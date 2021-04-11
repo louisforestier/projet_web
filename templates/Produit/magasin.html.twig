@@ -22,12 +22,12 @@
                     <td>{{ produit.quantite }}</td>
                 </tr>
                 <tr>
-                    {% if produit.quantite is null %}
+                    {% if produit.quantite == 0 %}
                     <td>vous ne pouvez pas commandez ce produit</td>
                     {% else %}
                     <th> Quantité voulu </th>
                     <td>
-                        <select name="{{ produit.id}}" id="list" size="1" tabindex="180">
+                        <select name="{{ produit.id}}" id="list" size="1" tabindex="180" >
                             {% for i in 0..produit.quantite %}
                             <option value="{{ i }}">{{ i }}</option>
                             {% endfor %}
