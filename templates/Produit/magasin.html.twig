@@ -10,36 +10,38 @@
           method="post">
         <fieldset>
             <legend>Les produits</legend>
-            {% for produit in produits %}
             <table>
+                <thead>
                 <tr>
-                    <th>Nom produit : </th>
-                    <td>{{ produit.libelle }}</td>
+                    <th>Nom produit :</th>
+                    <th>Prix produit :</th>
+                    <th>Quantité en stock du produit :</th>
+                    <th> Quantité voulu</th>
+
                 </tr>
-                <tr>
-                    <th>Prix produit : </th>
-                    <td>{{ produit.prix }}</td>
-                </tr>
-                <tr>
-                    <th>Quantité en stock du produit : </th>
-                    <td>{{ produit.quantite }}</td>
-                </tr>
-                <tr>
-                    {% if produit.quantite == 0 %}
-                    <td>vous ne pouvez pas commandez ce produit</td>
-                    {% else %}
-                    <th> Quantité voulu </th>
-                    <td>
-                        <select name="{{ produit.id}}" id="list" size="1" tabindex="180" >
-                            {% for i in 0..produit.quantite %}
-                            <option value="{{ i }}">{{ i }}</option>
-                            {% endfor %}
-                        </select>
-                    </td>
-                    {% endif %}
-                </tr>
+                </thead>
+                <tbody>
+                {% for produit in produits %}
+                    <tr>
+                        <td>{{ produit.libelle }}</td>
+                        <td>{{ produit.prix }}</td>
+                        <td>{{ produit.quantite }}</td>
+                        {% if produit.quantite == 0 %}
+                            <td>vous ne pouvez pas commandez ce produit</td>
+                        {% else %}
+                            <td>
+                                <select name="{{ produit.id }}" id="list" size="1" tabindex="180">
+                                    {% for i in 0..produit.quantite %}
+                                        <option value="{{ i }}">{{ i }}</option>
+                                    {% endfor %}
+                                </select>
+                            </td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+
+                </tbody>
             </table>
-            {% endfor %}
         </fieldset>
         <fieldset>
             <legend>Validez commande</legend>

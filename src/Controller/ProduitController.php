@@ -70,7 +70,7 @@ class ProduitController extends AbstractController
                 $panierRepository = $em->getRepository('App:Panier');
                 //parcour le formulaire
                 foreach ($form as $k => $v){
-                    if ($v !== 0){
+                    if ($v != 0){
                         /** @var Panier $panier */
                         $panier = $panierRepository->findOneBy(array('utilisateur'=> $utilisateur->getId(),'produit'=> $k));
                         if (is_null($panier)){
