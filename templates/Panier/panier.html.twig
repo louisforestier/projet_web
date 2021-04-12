@@ -21,7 +21,7 @@
            <td>{{ ligne.prix }}</td>
            <td>{{ ligne.quantite }}</td>
            <td>{{ ligne.sum }}</td>
-           <td><a href="{{ path('panier_supp_panier') }}">Supprimer</a></td>
+           <td><a href="{{ path('panier_supp_panier',{'id' : ligne.id}) }}">Supprimer</a></td>
        </tr>
        {% endfor %}
        <tr>
@@ -33,7 +33,7 @@
        </tr>
    </table>
    <div>
-       <a href="{{ path('panier_commander',panier) }}">Acheter</a>
+       <a href="{{ path('panier_commander') }}">Acheter</a>
        <a href="{{ path('panier_vider') }}">Vider</a>
    </div>
 {% endblock %}
