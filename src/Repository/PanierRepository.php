@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Panier;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use function Symfony\Component\DependencyInjection\Loader\Configurator\expr;
 
 /**
  * @method Panier|null find($id, $lockMode = null, $lockVersion = null)
@@ -19,14 +20,13 @@ class PanierRepository extends ServiceEntityRepository
         parent::__construct($registry, Panier::class);
     }
 
-    public function getPanierUtil($id_utilisateur){
-        $qb = $this->_em->createQueryBuilder();
-        $qb->select(array('id','id_utilisateur','id_panier','quantite'))
-            ->from('im2021_paniers', 'p')
-            ->where('p.id_utilisateur = :id')
-            ->setParameter('id',$id_utilisateur);
-        $query = $qb->getQuery();
-        return $query->getArrayResult();
+    public function getPanierUtil($utilisateur){
+        $qb = $this->createQueryBuilder('p');
+        $qb->select(array('p.id','IDENTITY(p.utilisateur)','IDENTITY(p.produit)','p.quantite','prod.libelle','prod.prix','prod.prix * p.quantite as sum'))
+            ->leftJoin('p.produit','prod')
+            ->where('p.utilisateur = :id')
+            ->setParameter('id',$utilisateur);
+        return $qb->getQuery()->getArrayResult();
     }
 
     // /**
