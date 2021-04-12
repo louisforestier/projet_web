@@ -33,8 +33,9 @@ class PanierController extends AbstractController
      * @return Response
      * @Route ("/panier/commander", name="panier_commander")
      */
-    public function commander() : Response
+    public function commander($panierClient) : Response
     {
+
         return $this->redirectToRoute("panier_gerer_panier");
     }
 
