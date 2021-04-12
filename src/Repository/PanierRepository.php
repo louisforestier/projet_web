@@ -19,6 +19,16 @@ class PanierRepository extends ServiceEntityRepository
         parent::__construct($registry, Panier::class);
     }
 
+    public function getPanierUtil($id_utilisateur){
+        $qb = $this->_em->createQueryBuilder();
+        $qb->select(array('id','id_utilisateur','id_panier','quantite'))
+            ->from('im2021_paniers', 'p')
+            ->where('p.id_utilisateur = :id')
+            ->setParameter('id',$id_utilisateur);
+        $query = $qb->getQuery();
+        return $query->getArrayResult();
+    }
+
     // /**
     //  * @return Panier[] Returns an array of Panier objects
     //  */
