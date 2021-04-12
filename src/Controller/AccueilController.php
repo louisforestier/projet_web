@@ -37,8 +37,10 @@ class AccueilController extends AbstractController
         $utilisateurRepository = $em->getRepository('App:Utilisateur');
         $utilisateur = $utilisateurRepository->find($user);
         $produitRepository = $em->getRepository('App:Produit');
-        $nbProduits = count($produitRepository->findAll());
-        return $this->render("Layouts/menu.html.twig", ['utilisateur'=>$utilisateur,'produits'=>$nbProduits]);
+        $query = $produitRepository->createQueryBuilder('p')
+            ->select('sum(p.quantite)');
+        $nb = $query->getQuery()->getSingleScalarResult();
+        return $this->render("Layouts/menu.html.twig", ['utilisateur'=>$utilisateur,'produits'=>$nb]);
     }
 
 

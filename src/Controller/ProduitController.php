@@ -6,6 +6,7 @@ use App\Entity\Panier;
 use App\Entity\Produit;
 use App\Entity\Utilisateur;
 use App\Form\ProduitType;
+use App\Service\Mailer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
@@ -100,7 +101,38 @@ class ProduitController extends AbstractController
         }
     }
 
+    /**
+     * @Route ("/traitMagasin", name="produit_trait_magasin")
+     */
+    public function traitMagasinAction(Request $request): Response
+    {
 
+    }
+
+    /**
+     * @param Mailer $mailer
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @Route(
+     *     "/envoimail",
+     *     name="produit_envoi_mail"
+     * )
+     */
+    public function envoiNbProduit(Mailer $mailer,\Swift_Mailer $swift_Mailer)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $produitRepository = $em->getRepository(Produit::class);
+        $query = $produitRepository->createQueryBuilder('p')
+            ->select('sum(p.quantite)');
+        $nb = $query->getQuery()->getSingleScalarResult();
+        $sujet = 'Nombre de produits';
+        $texte = 'Nous avons ' . $nb .' produits en stocks.';
+        $expediteur = 'adresseexpediteur@à.remplir';
+        $destinataire = 'adressedestinataire@à.remplir';
+        $mailer->envoiMessage($sujet,$texte,$expediteur,$destinataire,$swift_Mailer);
+        return $this->redirectToRoute('produit_magasin');
+    }
 
 }
 
