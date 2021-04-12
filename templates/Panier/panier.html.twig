@@ -1,0 +1,39 @@
+{% extends '/Layouts/siteLayout.html.twig' %}
+
+{% block titre_principal %} Votre panier {% endblock %}
+
+{% block vue %}
+   <table>
+       <tr>
+           <th>Libellé</th>
+           <th>Prix u.</th>
+           <th>Quantité</th>
+           <th>Prix total</th>
+           <th>Action</th>
+       </tr>
+       {% set total = 0 %}
+       {% set prixtotal = 0 %}
+       {% for ligne in panier %}
+       <tr>
+           {% set total =  ligne.quantite + total %}
+           {% set prixtotal =  ligne.sum + prixtotal %}
+           <td>{{ ligne.libelle }}</td>
+           <td>{{ ligne.prix }}</td>
+           <td>{{ ligne.quantite }}</td>
+           <td>{{ ligne.sum }}</td>
+           <td><a href="{{ path('panier_supp_panier') }}">Supprimer</a></td>
+       </tr>
+       {% endfor %}
+       <tr>
+           <td>Total</td>
+           <td></td>
+           <td>{{ total }}</td>
+           <td>{{ prixtotal }}</td>
+           <td></td>
+       </tr>
+   </table>
+   <div>
+       <a href="{{ path('panier_commander') }}">Acheter</a>
+       <a href="{{ path('panier_vider') }}">Vider</a>
+   </div>
+{% endblock %}
