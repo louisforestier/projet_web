@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Panier;
+use App\Entity\Produit;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -35,7 +37,22 @@ class PanierController extends AbstractController
      */
     public function commander() : Response
     {
-        return $this->redirectToRoute("panier_gerer_panier");
+        $user = $this->getParameter('user');
+        $em = $this->getDoctrine()->getManager();
+        $utilisateurRepository = $em->getRepository('App:Utilisateur');
+        $utilisateur = $utilisateurRepository->find($user);
+        if (is_null($utilisateur) || ($utilisateur->getIsadmin()))
+            throw new NotFoundHttpException("Vous n'avez pas les droits.");
+        else {
+            $panierRepository = $em->getRepository('App:Panier');
+            $panierClient = $panierRepository->getPanierUtil($utilisateur);
+            foreach ($panierClient as $item){
+                $ligne = $panierRepository->find($item['id']);
+                $em->remove($ligne);
+            }
+            $em->flush();
+            return $this->redirectToRoute("panier_gerer_panier");
+        }
     }
 
     /**
@@ -43,14 +60,46 @@ class PanierController extends AbstractController
      */
     public function vider() : Response
     {
-        return $this->redirectToRoute("panier_gerer_panier");
+        $user = $this->getParameter('user');
+        $em = $this->getDoctrine()->getManager();
+        $utilisateurRepository = $em->getRepository('App:Utilisateur');
+        $utilisateur = $utilisateurRepository->find($user);
+        if (is_null($utilisateur) || ($utilisateur->getIsadmin()))
+            throw new NotFoundHttpException("Vous n'avez pas les droits.");
+        else {
+            $panierRepository = $em->getRepository('App:Panier');
+            $panierClient = $panierRepository->getPanierUtil($utilisateur);
+            foreach ($panierClient as $item){
+                $ligne = $panierRepository->find($item['id']);
+                $produit = $ligne->getProduit();
+                $produit->setQuantite($produit->getQuantite()+$ligne->getQuantite());
+                $em->remove($ligne);
+            }
+            $em->flush();
+            return $this->redirectToRoute("panier_gerer_panier");
+        }
     }
 
     /**
-     * @Route ("/panier/supp/elem", name="panier_supp_panier")
+     * @Route ("/panier/supp/elem/{id}", name="panier_supp_panier")
      */
-    public function supprimer() : Response
+    public function supprimer($id) : Response
     {
-        return $this->redirectToRoute("panier_gerer_panier");
+        $user = $this->getParameter('user');
+        $em = $this->getDoctrine()->getManager();
+        $utilisateurRepository = $em->getRepository('App:Utilisateur');
+        $utilisateur = $utilisateurRepository->find($user);
+        if (is_null($utilisateur) || ($utilisateur->getIsadmin()))
+            throw new NotFoundHttpException("Vous n'avez pas les droits.");
+        else {
+            $panierRepository = $em->getRepository('App:Panier');
+            /** @var Panier $panier */
+            $panier = $panierRepository->find($id);
+            $produit = $panier->getProduit();
+            $produit->setQuantite($produit->getQuantite() + $panier->getQuantite());
+            $em->remove($panier);
+            $em->flush();
+            return $this->redirectToRoute("panier_gerer_panier");
+        }
     }
 }
