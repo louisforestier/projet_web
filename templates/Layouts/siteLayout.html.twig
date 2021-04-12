@@ -7,11 +7,9 @@
 {% block body %}
     <div>
         {{ render(controller('App\\Controller\\AccueilController::imageEntete')) }}
-        {% block entete %}{% endblock %}
     </div>
     <div>
         {{ render(controller('App\\Controller\\AccueilController::menu')) }}
-        {% block menu %}{% endblock %}
     </div>
     <div>
         <h1>{% block titre_principal %}{% endblock %}</h1>
