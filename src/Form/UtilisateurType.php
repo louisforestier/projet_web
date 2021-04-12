@@ -28,7 +28,7 @@ class UtilisateurType extends AbstractType
             ->add('prenom', TextType::class,
                 ['label' => 'Prénom','required'=>false])
             ->add('anniversaire', BirthdayType::class,
-                ['label' => 'Date de naissance', 'widget'=>'choice','required'=>false]);
+                ['label' => 'Date de naissance', 'widget'=>'choice','format'=>'dd-MM-yyyy','required'=>false]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
