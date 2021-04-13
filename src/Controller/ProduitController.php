@@ -101,13 +101,6 @@ class ProduitController extends AbstractController
         }
     }
 
-    /**
-     * @Route ("/traitMagasin", name="produit_trait_magasin")
-     */
-    public function traitMagasinAction(Request $request): Response
-    {
-
-    }
 
     /**
      * @param Mailer $mailer
