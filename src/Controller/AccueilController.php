@@ -74,12 +74,6 @@ class AccueilController extends AbstractController
         $em->flush();
         return new Response('<body></body>');
     }
-
-
-
-
-
-
-   
-
 }
+
+//Clementine Guillot et Louis Forestier

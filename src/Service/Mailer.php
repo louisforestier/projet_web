@@ -14,3 +14,5 @@ class Mailer
         $mailer->send($message);
     }
 }
+
+//Clementine Guillot et Louis Forestier

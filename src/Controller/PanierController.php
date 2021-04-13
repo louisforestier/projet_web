@@ -15,7 +15,7 @@ class PanierController extends AbstractController
      * @return Response
      * @Route ("/gerer_panier", name="panier_gerer_panier")
      */
-    public function gererPanier() : Response
+    public function gererPanierAction() : Response
     {
         $user = $this->getParameter('user');
         $em = $this->getDoctrine()->getManager();
@@ -35,7 +35,7 @@ class PanierController extends AbstractController
      * @return Response
      * @Route ("/panier/commander", name="panier_commander")
      */
-    public function commander() : Response
+    public function commanderAction() : Response
     {
         $user = $this->getParameter('user');
         $em = $this->getDoctrine()->getManager();
@@ -58,7 +58,7 @@ class PanierController extends AbstractController
     /**
      * @Route ("/panier/vider", name="panier_vider")
      */
-    public function vider() : Response
+    public function viderAction() : Response
     {
         $user = $this->getParameter('user');
         $em = $this->getDoctrine()->getManager();
@@ -83,7 +83,7 @@ class PanierController extends AbstractController
     /**
      * @Route ("/panier/supp/elem/{id}", name="panier_supp_panier")
      */
-    public function supprimer($id) : Response
+    public function supprimerAction($id) : Response
     {
         $user = $this->getParameter('user');
         $em = $this->getDoctrine()->getManager();
@@ -103,3 +103,5 @@ class PanierController extends AbstractController
         }
     }
 }
+
+//Clementine Guillot et Louis Forestier

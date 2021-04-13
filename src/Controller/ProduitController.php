@@ -119,7 +119,7 @@ class ProduitController extends AbstractController
      *     name="produit_envoi_mail"
      * )
      */
-    public function envoiNbProduit(Mailer $mailer,\Swift_Mailer $swift_Mailer)
+    public function envoiNbProduitACtion(Mailer $mailer,\Swift_Mailer $swift_Mailer)
     {
         $em = $this->getDoctrine()->getManager();
         $produitRepository = $em->getRepository(Produit::class);

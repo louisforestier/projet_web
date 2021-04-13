@@ -172,5 +172,6 @@ class Utilisateur
 
         return $this;
     }
-
 }
+
+//Clementine Guillot et Louis Forestier

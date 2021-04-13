@@ -22,7 +22,7 @@ class PanierRepository extends ServiceEntityRepository
 
     public function getPanierUtil($utilisateur){
         $qb = $this->createQueryBuilder('p');
-        $qb->select(array('p.id','IDENTITY(p.produit)','p.quantite','prod.libelle','prod.prix','prod.prix * p.quantite as sum'))
+        $qb->select(array('p.id','p.quantite','prod.libelle','prod.prix','prod.prix * p.quantite as sum'))
             ->leftJoin('p.produit','prod')
             ->where('p.utilisateur = :id')
             ->setParameter('id',$utilisateur);
