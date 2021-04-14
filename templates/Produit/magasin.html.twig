@@ -13,9 +13,9 @@
             <table>
                 <thead>
                 <tr>
-                    <th>Nom produit :</th>
-                    <th>Prix produit :</th>
-                    <th>Quantité en stock du produit :</th>
+                    <th>Nom produit</th>
+                    <th>Prix produit</th>
+                    <th>Quantité en stock du produit</th>
                     <th> Quantité voulu</th>
 
                 </tr>
@@ -27,7 +27,7 @@
                         <td>{{ produit.prix }}</td>
                         <td>{{ produit.quantite }}</td>
                         {% if produit.quantite == 0 %}
-                            <td>vous ne pouvez pas commandez ce produit</td>
+                            <td>Ce produit est en rupture de stock.</td>
                         {% else %}
                             <td>
                                 <select name="{{ produit.id }}" id="list" size="1" tabindex="180">
