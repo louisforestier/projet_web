@@ -88,3 +88,5 @@ class Panier
 
     }
 }
+
+//Clementine Guillot et Louis Forestier

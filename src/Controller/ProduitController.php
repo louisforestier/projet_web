@@ -66,7 +66,7 @@ class ProduitController extends AbstractController
             $form = $request->request;
             $panierRepository = $em->getRepository('App:Panier');
             //parcour le formulaire
-            if ($form->count() == 0){
+            if ($form->count() == 0) {
                 $produits = $produitRepository->findAll();
                 $args = array('produits' => $produits);
                 return $this->render("Produit/magasin.html.twig", $args);
@@ -98,21 +98,9 @@ class ProduitController extends AbstractController
                 return $this->redirectToRoute("produit_magasin");
             }
         }
-        //parametre du formulaire
-        $produits = $produitRepository->findAll();
-        $args = array('produits' => $produits);
-        return $this->render("Produit/magasin.html.twig", $args);
     }
 
 
-    /**
-     * @Route ("/traitMagasin", name="produit_trait_magasin")
-     */
-    public
-    function traitMagasinAction(Request $request): Response
-    {
-
-    }
 
     /**
      * @param Mailer $mailer
@@ -124,8 +112,7 @@ class ProduitController extends AbstractController
      *     name="produit_envoi_mail"
      * )
      */
-    public
-    function envoiNbProduit(Mailer $mailer, \Swift_Mailer $swift_Mailer)
+    public function envoiNbProduitACtion(Mailer $mailer,\Swift_Mailer $swift_Mailer)
     {
         $em = $this->getDoctrine()->getManager();
         $produitRepository = $em->getRepository(Produit::class);
