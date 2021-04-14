@@ -44,36 +44,6 @@ class AccueilController extends AbstractController
     }
 
 
-    /**
-     * @return Response
-     * @Route ("/ajoutusers", name="ajout_users")
-     */
-    public function ajoutsUtilisateursAction():Response
-    {
-        $em = $this->getDoctrine()->getManager();
-        $admin = new Utilisateur();
-        $admin->setIdentifiant('admin')
-            ->setMotdepasse('nimda')
-            ->setIsadmin(true);
-        $em->persist($admin);
-        $gillou = new Utilisateur();
-        $gillou->setIdentifiant('gilles')
-            ->setMotdepasse('sellig')
-            ->setNom('Subrenat')
-            ->setPrenom('Gilles')
-            ->setAnniversaire(new \DateTime("01-01-2000"));
-        $em->persist($gillou);
-        $rita = new Utilisateur();
-        $rita->setIdentifiant('rita')
-            ->setMotdepasse('atir')
-            ->setNom('Zrour')
-            ->setPrenom('Rita')
-            ->setAnniversaire(new \DateTime("02-01-2000"));
-        $em->persist($rita);
-
-        $em->flush();
-        return new Response('<body></body>');
-    }
 
 
 

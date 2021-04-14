@@ -64,16 +64,18 @@ class ProduitController extends AbstractController
         else {
             //recuperation du formulaire
             $form = $request->request;
-            if(is_null($form)){
-                //messages d'erreur si pas bien remplit
+            $panierRepository = $em->getRepository('App:Panier');
+            //parcour le formulaire
+            if ($form->count() == 0){
+                $produits = $produitRepository->findAll();
+                $args = array('produits' => $produits);
+                return $this->render("Produit/magasin.html.twig", $args);
             } else {
-                $panierRepository = $em->getRepository('App:Panier');
-                //parcour le formulaire
-                foreach ($form as $k => $v){
-                    if ($v != 0){
+                foreach ($form as $k => $v) {
+                    if ($v != 0) {
                         /** @var Panier $panier */
-                        $panier = $panierRepository->findOneBy(array('utilisateur'=> $utilisateur->getId(),'produit'=> $k));
-                        if (is_null($panier)){
+                        $panier = $panierRepository->findOneBy(array('utilisateur' => $utilisateur->getId(), 'produit' => $k));
+                        if (is_null($panier)) {
                             $newPanier = new Panier();
                             /** @var Produit $prodInPanier */
                             $prodInPanier = $produitRepository->find($k);
@@ -83,7 +85,7 @@ class ProduitController extends AbstractController
                             $em->persist($newPanier);
                             $em->flush();
                         } else {
-                            $panier->setQuantite($panier->getQuantite()+$v);
+                            $panier->setQuantite($panier->getQuantite() + $v);
                             $em->flush();
                         }
                         //modification dans produit
@@ -93,18 +95,21 @@ class ProduitController extends AbstractController
                         $em->flush();
                     }
                 }
+                return $this->redirectToRoute("produit_magasin");
             }
-            //parametre du formulaire
-            $produits = $produitRepository->findAll();
-            $args = array('produits' => $produits);
-            return $this->render("Produit/magasin.html.twig", $args);
         }
+        //parametre du formulaire
+        $produits = $produitRepository->findAll();
+        $args = array('produits' => $produits);
+        return $this->render("Produit/magasin.html.twig", $args);
     }
+
 
     /**
      * @Route ("/traitMagasin", name="produit_trait_magasin")
      */
-    public function traitMagasinAction(Request $request): Response
+    public
+    function traitMagasinAction(Request $request): Response
     {
 
     }
@@ -119,7 +124,8 @@ class ProduitController extends AbstractController
      *     name="produit_envoi_mail"
      * )
      */
-    public function envoiNbProduit(Mailer $mailer,\Swift_Mailer $swift_Mailer)
+    public
+    function envoiNbProduit(Mailer $mailer, \Swift_Mailer $swift_Mailer)
     {
         $em = $this->getDoctrine()->getManager();
         $produitRepository = $em->getRepository(Produit::class);
@@ -127,10 +133,10 @@ class ProduitController extends AbstractController
             ->select('sum(p.quantite)');
         $nb = $query->getQuery()->getSingleScalarResult();
         $sujet = 'Nombre de produits';
-        $texte = 'Nous avons ' . $nb .' produits en stocks.';
+        $texte = 'Nous avons ' . $nb . ' produits en stocks.';
         $expediteur = 'adresseexpediteur@à.remplir';
         $destinataire = 'adressedestinataire@à.remplir';
-        $mailer->envoiMessage($sujet,$texte,$expediteur,$destinataire,$swift_Mailer);
+        $mailer->envoiMessage($sujet, $texte, $expediteur, $destinataire, $swift_Mailer);
         return $this->redirectToRoute('produit_magasin');
     }
 
