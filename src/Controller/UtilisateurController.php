@@ -188,7 +188,7 @@ class UtilisateurController extends AbstractController
      *     requirements={"id"="[1-9]\d*"}
      * )
      */
-    public function supprimerUtilisateurAction($id):Response
+    public function supprimerUtilisateurAction($id) : Response
     {
         $user = $this->getParameter('user');
         $em = $this->getDoctrine()->getManager();
@@ -200,6 +200,16 @@ class UtilisateurController extends AbstractController
         elseif (is_null($utilisateur))
             throw new NotFoundHttpException("Cet utilisateur n'existe pas.");
         else {
+            if ($utilisateur->getIsadmin()) {
+                $panierRepository = $em->getRepository('App:Panier');
+                $panierClient = $panierRepository->getPanierUtil($utilisateur);
+                foreach ($panierClient as $item) {
+                    $ligne = $panierRepository->find($item['id']);
+                    $produit = $ligne->getProduit();
+                    $produit->setQuantite($produit->getQuantite() + $ligne->getQuantite());
+                    $em->remove($ligne);
+                }
+            }
             $em->remove($utilisateur);
             $em->flush();
             return $this->redirectToRoute("utilisateur_gestion");
